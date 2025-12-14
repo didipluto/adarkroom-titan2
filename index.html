@@ -16,19 +16,15 @@
 		div#wrapper {
 			width: 100% !important;
 			max-width: none !important;
-			padding: 20px 10px !important; /* 减小左右边距 */
+			padding: 20px 10px !important;
 			box-sizing: border-box;
 		}
 		
-		/* 稍微放大全局字号，保护视力 */
-		body {
-			zoom: 1.1;
-		}
+		/* 放大全局字号，保护视力 */
+		body { zoom: 1.1; }
 
-		/* 隐藏所有可能的移动端警告 */
-		#mobile, #mobile-warning, .mobile-warning {
-			display: none !important;
-		}
+		/* 隐藏所有警告 */
+		#mobile, #mobile-warning, .mobile-warning { display: none !important; }
 	</style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -46,15 +42,19 @@
 	<script src="lang/langs.js"></script>
 	
 	<script>
-		// try to read "lang" param's from url
+		// 尝试从 URL 读取 lang 参数
 		var lang = decodeURIComponent((new RegExp('[?|&]lang=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
-		// if no language requested, try to read it from local storage
+		
+		// 如果 URL 没指定语言，尝试读取本地存储，如果都没有，【默认强制设为 zh_cn】
 		if(!lang){
 			try {
-				lang = localStorage.lang;
-			} catch(e) {}
+				lang = localStorage.lang || 'zh_cn'; 
+			} catch(e) {
+				lang = 'zh_cn';
+			}
 		}
-		// if a language different than english requested, load all translations
+		
+		// 加载对应语言包
 		if(lang && lang != 'en'){
 			document.write('<script src="lang/'+lang+'/strings.js"><\/script>');
 			document.write('<link rel="stylesheet" type="text/css" href="lang/'+lang+'/main.css" \/>');
