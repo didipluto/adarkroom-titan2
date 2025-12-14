@@ -4,6 +4,11 @@
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
 	
+	<link rel="manifest" href="manifest.json">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
 	<title>A Dark Room</title>
 	<meta itemprop="description" name="description" property="og:description" content="A minimalist text adventure">
 	<meta itemprop="image" property="og:image" content="img/adr.png" />
@@ -16,14 +21,14 @@
 		div#wrapper {
 			width: 100% !important;
 			max-width: none !important;
-			padding: 20px 10px !important;
+			padding: 20px 10px !important; /* 减小左右边距 */
 			box-sizing: border-box;
 		}
 		
 		/* 放大全局字号，保护视力 */
 		body { zoom: 1.1; }
 
-		/* 隐藏所有警告 */
+		/* 暴力隐藏所有警告 */
 		#mobile, #mobile-warning, .mobile-warning { display: none !important; }
 	</style>
 
@@ -45,10 +50,10 @@
 		// 尝试从 URL 读取 lang 参数
 		var lang = decodeURIComponent((new RegExp('[?|&]lang=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 		
-		// 如果 URL 没指定语言，尝试读取本地存储，如果都没有，【默认强制设为 zh_cn】
+		// 如果 URL 没指定，且本地也没有缓存，默认使用 'zh_cn'
 		if(!lang){
 			try {
-				lang = localStorage.lang || 'zh_cn'; 
+				lang = localStorage.lang || 'zh_cn';
 			} catch(e) {
 				lang = 'zh_cn';
 			}
